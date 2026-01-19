@@ -70,4 +70,4 @@ class Grade(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student} - {self.value}"
+        return f"{self.student} | {self.value}"

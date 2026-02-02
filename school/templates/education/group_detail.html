@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Група: {{ group.name }}</h1>
+
+<hr>
+
+<h2>👩‍🎓 Студенти групи</h2>
+<ul>
+    {% for student in students %}
+        <li>{{ student.user.get_full_name|default:student.user.username }}</li>
+    {% empty %}
+        <li>У цій групі поки немає студентів</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h2>📚 Розклад занять</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>День</th>
+        <th>Пара</th>
+        <th>Предмет</th>
+        <th>Викладач</th>
+        <th>Аудиторія</th>
+    </tr>
+
+    {% for lesson in lessons %}
+    <tr>
+        <td>{{ lesson.get_day_display }}</td>
+        <td>{{ lesson.lesson_number }}</td>
+        <td>{{ lesson.subject.name }}</td>
+        <td>{{ lesson.teacher.user.get_full_name|default:lesson.teacher.user.username }}</td>
+        <td>{{ lesson.classroom.number }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">Розклад для цієї групи ще не створений</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

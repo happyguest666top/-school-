@@ -1,5 +1,7 @@
 from django.db import models
 
+# Create your models here.
+
 from django.contrib.auth.models import User
 
 
@@ -19,7 +21,7 @@ class Student(models.Model):
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -45,13 +47,13 @@ class Lesson(models.Model):
         (1, 'Понеділок'),
         (2, 'Вівторок'),
         (3, 'Середа'),
-        (4, 'Четверг'),
-        (5, 'П`ятниця')
+        (4, 'Четвер'),
+        (5, 'Пʼятниця'),
     )
 
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     day = models.IntegerField(choices=DAY_CHOICES)
-    lesson_number = models.IntegerField()
+    lesson_number = models.IntegerField()  # 1–8
     subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
     teacher = models.ForeignKey(Teacher, on_delete=models.DO_NOTHING)
     classroom = models.ForeignKey(Classroom, on_delete=models.DO_NOTHING)
@@ -60,7 +62,7 @@ class Lesson(models.Model):
         unique_together = ('group', 'day', 'lesson_number')
 
     def __str__(self):
-        return f"{self.group} | {self.subject} | {self.day} | {self.lesson_number}"
+        return f"{self.group} | {self.subject} | {self.day}-{self.lesson_number}"
 
 
 class Grade(models.Model):
@@ -70,4 +72,4 @@ class Grade(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student} | {self.value}"
+        return f"{self.student} — {self.value}"
